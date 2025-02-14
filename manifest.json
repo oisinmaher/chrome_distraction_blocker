@@ -1,12 +1,26 @@
 {
 "manifest_version": 3,
-"name": "DistractionBlocker",
-"version": "1.0.0",
+"name": "Distraction Blocker",
+"version": "0.0.1",
+"icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128":"images/icon128.png"
+},
+"permissions": [
+    "storage"
+  ],
+"description":
+    "A very compact simple distraction blocker for chrome, allowing your brain to have a dopamine detox so you can focus.",
 "content_scripts": [
     {
         "matches" : ["https://www.youtube.com/*", "https://www.tiktok.com/*", "https://x.com/*", "https://www.facebook.com/*", "https://www.instagram.com/*"],
         "js" : ["Content.js"],
         "run_at" : "document_end"
-    }
-]
+    }   
+],
+"action" : {
+    "default_popup": "popup.html"
+}
 }

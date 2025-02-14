@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: Calibri, sans-serif;
+            min-width: 248px;
+            margin: 10px;
+        }
+        .popupHeading {
+            font-size: 115%;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="popupHeading">Distraction Blocker</div>
+    <label>
+        <input type="checkbox" id="blockTwitter" />
+        Block X (formerly Twitter)
+    </label><br>
+    <label>
+        <input type="checkbox" id="blockTiktok" />
+        Block TikTok
+    </label><br>
+    <label>
+        <input type="checkbox" id="blockInstagram" />
+        Block Instagram
+    </label><br>
+    <label>
+        <input type="checkbox" id="blockFacebook" />
+        Block Facebook
+    </label><br>
+
+    <div class="popupHeading">YouTube Options</div>
+    <label>
+        <input type="checkbox" id="blockYouTubeFull" />
+        Block YouTube Completely
+    </label><br>
+    <label>
+        <input type="checkbox" id="blockShorts" />
+        Block Shorts
+    </label><br>
+    <label>
+        <input type="checkbox" id="hideYouTubeRec" />
+        Hide all Recommendations
+    </label><br>
+
+    <script src="popup.js"></script> <!-- Ensure the script is included -->
+</body>
+</html>
