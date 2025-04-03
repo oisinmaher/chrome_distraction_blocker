@@ -1,3 +1,5 @@
+let puoX = false, puoInsta = false, puoFb = false, 
+puoTT = false, puoYTF = false, puoShor = false, puoYTRec = false; 
 function redirectToSearchPage(){
     window.location.href="https://www.youtube.com/results?search_query=";
 }
@@ -15,6 +17,10 @@ function removeRecommendedSideBar(){
     if (secondaryDiv) 
         secondaryDiv.remove();
 }
+function removeBellIcon(){
+    let notificationIcon = document.querySelector('ytd-notification-topbar-button-renderer');
+        if(notificationIcon) notificationIcon.remove();
+}
 function removeEndscreen() {
     const observer = new MutationObserver(() => {
         const endscreen = document.querySelector('.ytp-endscreen-content');
@@ -23,14 +29,12 @@ function removeEndscreen() {
       observer.observe(document.documentElement, { childList: true, subtree: true });
 }
 function watchingVideoCase(){
-    removeSubscriptions();
     removeEndscreen();
     removeRecommendedSideBar();
-    document.addEventListener('yt-navigate-start', removeRecommendedSideBar, removeSubscriptions);
-    document.addEventListener('yt-navigate-finish', removeRecommendedSideBar, removeSubscriptions);
+    document.addEventListener('yt-navigate-start', removeRecommendedSideBar);
+    document.addEventListener('yt-navigate-finish', removeRecommendedSideBar);
 }
 function hideElementsYoutube(currentURL) {
-    removeSubscriptions();
     if(currentURL === "https://www.youtube.com/"
     || currentURL.startsWith("https://www.youtube.com/shorts")
     || currentURL.startsWith("https://www.youtube.com/feed") ){
@@ -41,31 +45,10 @@ function hideElementsYoutube(currentURL) {
     }
 }
 function handleRequestByURL(url){
-    // chrome.storage.sync.get([
-    //     "blockInstagramKey",
-    //     "blockFacebookKey",
-    //     "blockTiktokKey",
-    //     "blockTwitterKey",
-    //     "blockYouTubeFullKey",
-    //     "blockShortsKey",
-    //     "hideYouTubeRecKey"
-    // ], (result) => {
-    //     let puoInsta = result.blockInstagramKey ?? false;
-    //     let puoFb = result.blockFacebookKey ?? false;
-    //     let puoTT = result.blockTiktokKey ?? false;
-    //     let puoX = result.blockTwitterKey ?? false;
-    //     let puoYTF = result.blockYouTubeFullKey ?? false;
-    //     let puoShor = result.blockShortsKey ?? false;
-    //     let puoYTRec = result.hideYouTubeRecKey ?? false;
-    // }
-    // );
-    // console.log("Loaded values:", { puoInsta, puoFb, puoTT, puoX, puoYTF, puoShor, puoYTRec });
     if(url.startsWith("https://www.youtube.com")){
         hideElementsYoutube(url);
-        removeSubscriptions();
     }
-    else if(url.startsWith("https://www.tiktok.com")){ 
-        console.log(puoTT);
+    else if(url.startsWith("https://www.tiktok.com")){
         redirectToHome();
     }
     else if(url.startsWith("https://x.com")){
@@ -77,7 +60,11 @@ function handleRequestByURL(url){
     else if(url.startsWith("https://www.facebook.com/")){
         redirectToHome();
     }
+    else if(url.startsWith("https://discord.com/")){
+        redirectToHome();
+    }
 }
+
 let lastURL = window.location.href; 
 handleRequestByURL(lastURL);
 const urlObserver = new  MutationObserver(() => {
@@ -86,5 +73,26 @@ const urlObserver = new  MutationObserver(() => {
         lastURL = currentURL;
         handleRequestByURL(currentURL);
     }
+    removeSubscriptions();
+    removeBellIcon();
 });
 urlObserver.observe(document.body, {childList: true, subtree: true});
+console.log(puoInsta);
+chrome.storage.sync.get([
+    "blockInstagramKey",
+    "blockFacebookKey",
+    "blockTiktokKey",
+    "blockTwitterKey",
+    "blockYouTubeFullKey",
+    "blockShortsKey",
+    "hideYouTubeRecKey"
+], (result) => {
+    puoInsta = result.blockInstagramKey ?? false;
+    puoFb = result.blockFacebookKey ?? false;
+    puoTT = result.blockTiktokKey ?? false;
+    puoX = result.blockTwitterKey ?? false;
+    puoYTF = result.blockYouTubeFullKey ?? false;
+    puoShor = result.blockShortsKey ?? false;
+    puoYTRec = result.hideYouTubeRecKey ?? false;
+    console.log("Loaded values:", { puoInsta, puoFb, puoTT, puoX, puoYTF, puoShor, puoYTRec });
+});
