@@ -78,21 +78,4 @@ const urlObserver = new  MutationObserver(() => {
 });
 urlObserver.observe(document.body, {childList: true, subtree: true});
 console.log(puoInsta);
-chrome.storage.sync.get([
-    "blockInstagramKey",
-    "blockFacebookKey",
-    "blockTiktokKey",
-    "blockTwitterKey",
-    "blockYouTubeFullKey",
-    "blockShortsKey",
-    "hideYouTubeRecKey"
-], (result) => {
-    puoInsta = result.blockInstagramKey ?? false;
-    puoFb = result.blockFacebookKey ?? false;
-    puoTT = result.blockTiktokKey ?? false;
-    puoX = result.blockTwitterKey ?? false;
-    puoYTF = result.blockYouTubeFullKey ?? false;
-    puoShor = result.blockShortsKey ?? false;
-    puoYTRec = result.hideYouTubeRecKey ?? false;
-    console.log("Loaded values:", { puoInsta, puoFb, puoTT, puoX, puoYTF, puoShor, puoYTRec });
-});
+
